@@ -1,0 +1,1 @@
+This repository contains code for predictive models in vehicle insurance claims analysis. It includes data preprocessing, feature engineering, and machine learning techniques. The repository aims to provide insights and solutions for improving insurance claim predictions.
