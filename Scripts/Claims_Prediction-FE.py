@@ -7,10 +7,13 @@
 # Import the necessary libraries:
 import numpy as np
 import pandas as pd
+import warnings
 # Import KeyedVectors from gensim.models for working with word vectors
 from gensim.models import KeyedVectors
 # Import StandardScaler from sklearn.preprocessing for standardization
 from sklearn.preprocessing import StandardScaler
+
+warnings.filterwarnings('ignore')
 
 # Import train and test datasets
 x_train = pd.read_csv(r'D:\ML_Projects\Vehicle_Insurance_Claims_Prediction\Data\train_set.csv')
@@ -22,13 +25,6 @@ x_test = x_test.merge(example_entry, on='Row_ID', how='left')
 # Due to the large size of the dataset, training the model with the full dataset is difficult, so we sample 60% of the data for training.
 #x_train = x_train.sample(frac=0.60)
 #x_test = x_test.sample(frac=0.60)
-
-#x_train.to_csv(r'D:\ML_Projects\Vehicle_Insurance_Claims_Prediction\models\x_train_60.csv', index=False)
-#x_test.to_csv(r'D:\ML_Projects\Vehicle_Insurance_Claims_Prediction\models\x_test_60.csv', index=False)
-
-#x_train = pd.read_csv(r'D:\ML_Projects\Vehicle_Insurance_Claims_Prediction\models\x_train_60.csv')
-#x_train = x_train.sample(frac=1)
-#x_test = pd.read_csv(r'D:\ML_Projects\Vehicle_Insurance_Claims_Prediction\models\x_test_60.csv')
 
 # Data Preprocessing:
 
@@ -212,11 +208,6 @@ x_train = Feature_Engineering(x_train)
 # Apply the same feature engineering to the testing data
 x_test = Feature_Engineering(x_test)
 
-# Apply feature engineering to the training data
-x_train = Feature_Engineering(x_train)
-# Apply the same feature engineering to the testing data
-x_test = Feature_Engineering(x_test)
-
 # Check if featurization resulted in any null values in the train and test datasets.
 # Calculate the number of missing values in each column of the training data
 # train_na_counts = x_train.isnull().sum()
@@ -248,8 +239,12 @@ y_test = x_test['Claim_Amount']
 # Adjust a single value in the test target variable for evaluation purposes
 y_test.iloc[int(len(y_test)/5)] = 0.00001
 
-train_scaled.to_csv(r'D:\ML_Projects\Vehicle_Insurance_Claims_Prediction\Data\train_scaled.csv')
-test_scaled.to_csv(r'D:\ML_Projects\Vehicle_Insurance_Claims_Prediction\Data\test_scaled.csv')
+# Save the preprocessed data and labels to csv files
+train_scaled_df = pd.DataFrame(train_scaled, columns=x_train.columns.drop(['Row_ID', 'Claim_Amount']))
+test_scaled_df = pd.DataFrame(test_scaled, columns=x_test.columns.drop(['Row_ID', 'Claim_Amount']))
+# Save the scaled DataFrames to CSV files
+train_scaled_df.to_csv(r'D:\ML_Projects\Vehicle_Insurance_Claims_Prediction\Data\train_scaled.csv', index=False)
+test_scaled_df.to_csv(r'D:\ML_Projects\Vehicle_Insurance_Claims_Prediction\Data\test_scaled.csv', index=False)
 
 y_train.to_csv(r'D:\ML_Projects\Vehicle_Insurance_Claims_Prediction\Data\y_train.csv')
 y_test.to_csv(r'D:\ML_Projects\Vehicle_Insurance_Claims_Prediction\Data\y_test.csv')
