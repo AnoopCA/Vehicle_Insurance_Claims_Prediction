@@ -1,8 +1,5 @@
-Archives
-test_set.csv
-train_set.csv
+Archives/
+models/
+Data/
+.ipynb_checkpoints/
 dictionary.html
-.ipynb_checkpoints
-example_entry.csv
-models
-best_scores.txt
