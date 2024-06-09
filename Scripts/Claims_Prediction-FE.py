@@ -235,14 +235,13 @@ test_scaled = scaler.transform(x_test.drop(['Row_ID', 'Claim_Amount'], axis=1))
 # Extract the target variable 'Claim_Amount' for training and testing data
 y_train = x_train['Claim_Amount']
 y_test = x_test['Claim_Amount']
-
 # Adjust a single value in the test target variable for evaluation purposes
 y_test.iloc[int(len(y_test)/5)] = 0.00001
 
 # Save the preprocessed data and labels to csv files
 train_scaled_df = pd.DataFrame(train_scaled, columns=x_train.columns.drop(['Row_ID', 'Claim_Amount']))
 test_scaled_df = pd.DataFrame(test_scaled, columns=x_test.columns.drop(['Row_ID', 'Claim_Amount']))
-# Save the scaled DataFrames to CSV files
+# Save the scaled train and test DataFrames to CSV files
 train_scaled_df.to_csv(r'D:\ML_Projects\Vehicle_Insurance_Claims_Prediction\Data\train_scaled.csv', index=False)
 test_scaled_df.to_csv(r'D:\ML_Projects\Vehicle_Insurance_Claims_Prediction\Data\test_scaled.csv', index=False)
 
